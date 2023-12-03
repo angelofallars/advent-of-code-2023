@@ -25,15 +25,15 @@ fn lex_recursive(input: &Vec<char>, pos: usize, tokens: Vec<Token>) -> Vec<Token
     let pos = skip_whitespace(input, pos);
     let c = input[pos];
 
-    match c {
-        ':' => return lex_recursive(input, advance(pos), append(tokens, Token::Colon)),
-        ',' => return lex_recursive(input, advance(pos), append(tokens, Token::Comma)),
-        ';' => return lex_recursive(input, advance(pos), append(tokens, Token::Semicolon)),
-        '\n' => return lex_recursive(input, advance(pos), append(tokens, Token::Newline)),
+    let (pos, tokens) = match c {
+        ':' => (advance(pos), append(tokens, Token::Colon)),
+        ',' => (advance(pos), append(tokens, Token::Comma)),
+        ';' => (advance(pos), append(tokens, Token::Semicolon)),
+        '\n' => (advance(pos), append(tokens, Token::Newline)),
         _ => {
             if c.is_digit(10) {
                 let (pos, digit) = read_number(&input, pos);
-                return lex_recursive(input, pos, append(tokens, Token::Digit(digit)));
+                (pos, append(tokens, Token::Digit(digit)))
             } else if c.is_alphabetic() {
                 let (pos, ident) = read_ident(&input, pos);
                 let token = match ident.as_str() {
@@ -43,13 +43,14 @@ fn lex_recursive(input: &Vec<char>, pos: usize, tokens: Vec<Token>) -> Vec<Token
                     "Game" => Token::Game,
                     _ => unreachable!(),
                 };
-
-                return lex_recursive(input, pos, append(tokens, token));
+                (pos, append(tokens, token))
+            } else {
+                panic!("Unknown character at {}: {}", pos, c);
             }
-
-            panic!("Unknown character at {}: {}", pos, c);
         }
-    }
+    };
+
+    lex_recursive(input, pos, tokens)
 }
 
 fn skip_whitespace(input: &Vec<char>, pos: usize) -> usize {
