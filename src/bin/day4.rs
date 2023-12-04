@@ -17,10 +17,12 @@ fn main() -> Result<(), Box<dyn Error>> {
         .collect::<Vec<char>>();
 
     let cards = parser::parse(lexer::lex(input));
-    let pt1_score = evaluator::eval_part1(&cards);
-    println!("Day 4 Part 1 answer: {:?}", pt1_score);
-    let pt2_score = evaluator::eval_part2(&cards);
-    println!("Day 4 Part 2 answer: {:?}", pt2_score);
+
+    let score_part1 = evaluator::eval_part1(&cards);
+    println!("Day 4 Part 1 answer: {:?}", score_part1);
+
+    let score_part2 = evaluator::eval_part2(&cards);
+    println!("Day 4 Part 2 answer: {:?}", score_part2);
 
     Ok(())
 }
