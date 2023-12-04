@@ -164,8 +164,8 @@ mod parser {
         expect_token(Token::Colon, &tokens[pos]);
 
         let pos = advance(pos);
-        let (pos, nums_winning) = parse_nums_winning(tokens, pos);
-        let (pos, nums_held) = parse_nums_held(tokens, pos);
+        let (pos, nums_winning) = parse_nums(tokens, pos, Token::Pipe);
+        let (pos, nums_held) = parse_nums(tokens, pos, Token::Newline);
 
         (
             pos,
@@ -177,19 +177,8 @@ mod parser {
         )
     }
 
-    fn parse_nums_winning(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
-        parse_numbers(tokens, pos, mem::discriminant(&Token::Pipe))
-    }
-    fn parse_nums_held(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
-        parse_numbers(tokens, pos, mem::discriminant(&Token::Newline))
-    }
-
-    fn parse_numbers(
-        tokens: &Vec<Token>,
-        pos: usize,
-        end_token: mem::Discriminant<Token>,
-    ) -> (usize, Vec<usize>) {
-        return aux(tokens, pos, end_token, Vec::new());
+    fn parse_nums(tokens: &Vec<Token>, pos: usize, end_token: Token) -> (usize, Vec<usize>) {
+        return aux(tokens, pos, mem::discriminant(&end_token), Vec::new());
 
         fn aux(
             tokens: &Vec<Token>,
