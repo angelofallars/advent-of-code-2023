@@ -254,7 +254,7 @@ mod evaluator {
             .into_iter()
             .map(|card| calculate_matches(card))
             .collect();
-        let instances: Vec<usize> = cards.into_iter().map(|_| 1).collect();
+        let instances: Vec<usize> = vec![1; cards.len()];
 
         return aux(cards, points, 0, instances);
 
