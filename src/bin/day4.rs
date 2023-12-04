@@ -61,9 +61,9 @@ mod lexer {
                     (pos, Number(number))
                 }
                 'C' => {
-                    let (pos, ident) = read_ident(input, pos);
-                    if ident != "Card" {
-                        panic!("Invalid identifier at {}: {}", pos, ident);
+                    let (pos, identifier) = read_identifier(input, pos);
+                    if identifier != "Card" {
+                        panic!("Invalid identifier at {}: {}", pos, identifier);
                     }
                     (pos, Card)
                 }
@@ -100,7 +100,7 @@ mod lexer {
         )
     }
 
-    fn read_ident(input: &Vec<char>, pos: usize) -> (usize, String) {
+    fn read_identifier(input: &Vec<char>, pos: usize) -> (usize, String) {
         read_sequence(
             input,
             pos,
