@@ -19,10 +19,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     let cards = parser::parse(lexer::lex(input));
 
     let score_part1 = evaluator::eval_part1(&cards);
-    println!("Day 4 Part 1 answer: {:?}", score_part1);
+    println!("Day 4 Part 1 answer: {score_part1}");
 
     let score_part2 = evaluator::eval_part2(&cards);
-    println!("Day 4 Part 2 answer: {:?}", score_part2);
+    println!("Day 4 Part 2 answer: {score_part2}");
 
     Ok(())
 }
