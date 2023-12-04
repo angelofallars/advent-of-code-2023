@@ -7,8 +7,8 @@ fn main() -> Result<(), Box<dyn std::error::Error + 'static>> {
         .collect::<Vec<char>>();
 
     let games = parse(lex(input));
-    println!("Day 2 Part One answer: {}", sum_possible_ids(&games));
-    println!("Day 2 Part Two answer: {}", sum_power(&games));
+    println!("Day 2 Part 1 answer: {}", sum_possible_ids(&games));
+    println!("Day 2 Part 2 answer: {}", sum_power(&games));
 
     Ok(())
 }
