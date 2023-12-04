@@ -234,21 +234,6 @@ mod evaluator {
         }
     }
 
-    fn calculate_points(card: &Card) -> usize {
-        let match_count = calculate_matches(card);
-        if match_count == 0 {
-            return 0;
-        }
-
-        let base: usize = 2;
-        base.pow((match_count - 1) as u32)
-    }
-    fn calculate_matches(card: &Card) -> usize {
-        let a: HashSet<usize> = HashSet::from_iter(card.set_a.clone());
-        let b: HashSet<usize> = HashSet::from_iter(card.set_b.clone());
-        a.intersection(&b).count()
-    }
-
     pub fn eval_pt2(cards: &Vec<Card>) -> usize {
         let points: Vec<usize> = cards
             .into_iter()
@@ -282,5 +267,20 @@ mod evaluator {
 
             aux(cards, points, advance(pos), instances)
         }
+    }
+
+    fn calculate_points(card: &Card) -> usize {
+        let match_count = calculate_matches(card);
+        if match_count == 0 {
+            return 0;
+        }
+
+        let base: usize = 2;
+        base.pow((match_count - 1) as u32)
+    }
+    fn calculate_matches(card: &Card) -> usize {
+        let a: HashSet<usize> = HashSet::from_iter(card.set_a.clone());
+        let b: HashSet<usize> = HashSet::from_iter(card.set_b.clone());
+        a.intersection(&b).count()
     }
 }
