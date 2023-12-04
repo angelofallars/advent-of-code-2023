@@ -78,15 +78,8 @@ mod lexer {
     }
 
     fn skip_whitespace(input: &Vec<char>, pos: usize) -> usize {
-        return aux(input, pos);
-
-        fn aux(input: &Vec<char>, pos: usize) -> usize {
-            let c = input[pos];
-            if c != ' ' {
-                return pos;
-            }
-            aux(input, advance(pos))
-        }
+        let (pos, _) = read_sequence(input, pos, |c| c == ' ', |_| ());
+        pos
     }
 
     fn read_number(input: &Vec<char>, pos: usize) -> (usize, usize) {
