@@ -170,20 +170,20 @@ mod parser {
         expect_token(Token::Colon, &tokens[pos]);
 
         let pos = advance(pos);
-        let (pos, set_a) = parse_set_a(tokens, pos);
-        let (pos, set_b) = parse_set_b(tokens, pos);
+        let (pos, set_a) = parse_numbers_a(tokens, pos);
+        let (pos, set_b) = parse_numbers_b(tokens, pos);
 
         (pos, Card { id, set_a, set_b })
     }
 
-    fn parse_set_a(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
-        parse_set(tokens, pos, mem::discriminant(&Token::Pipe))
+    fn parse_numbers_a(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
+        parse_numbers(tokens, pos, mem::discriminant(&Token::Pipe))
     }
-    fn parse_set_b(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
-        parse_set(tokens, pos, mem::discriminant(&Token::Newline))
+    fn parse_numbers_b(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
+        parse_numbers(tokens, pos, mem::discriminant(&Token::Newline))
     }
 
-    fn parse_set(
+    fn parse_numbers(
         tokens: &Vec<Token>,
         pos: usize,
         end_token: mem::Discriminant<Token>,
