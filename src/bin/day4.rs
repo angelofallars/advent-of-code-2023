@@ -139,8 +139,8 @@ mod parser {
     #[derive(Debug)]
     pub struct Card {
         pub id: usize,
-        pub set_a: Vec<usize>,
-        pub set_b: Vec<usize>,
+        pub nums_winning: Vec<usize>,
+        pub nums_held: Vec<usize>,
     }
 
     pub fn parse(tokens: Vec<Token>) -> Vec<Card> {
@@ -172,16 +172,23 @@ mod parser {
         expect_token(Token::Colon, &tokens[pos]);
 
         let pos = advance(pos);
-        let (pos, set_a) = parse_numbers_a(tokens, pos);
-        let (pos, set_b) = parse_numbers_b(tokens, pos);
+        let (pos, nums_winning) = parse_nums_winning(tokens, pos);
+        let (pos, nums_held) = parse_nums_held(tokens, pos);
 
-        (pos, Card { id, set_a, set_b })
+        (
+            pos,
+            Card {
+                id,
+                nums_winning,
+                nums_held,
+            },
+        )
     }
 
-    fn parse_numbers_a(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
+    fn parse_nums_winning(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
         parse_numbers(tokens, pos, mem::discriminant(&Token::Pipe))
     }
-    fn parse_numbers_b(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
+    fn parse_nums_held(tokens: &Vec<Token>, pos: usize) -> (usize, Vec<usize>) {
         parse_numbers(tokens, pos, mem::discriminant(&Token::Newline))
     }
 
@@ -281,8 +288,8 @@ mod evaluator {
         base.pow((match_count - 1) as u32)
     }
     fn calculate_matches(card: &Card) -> usize {
-        let a: HashSet<usize> = HashSet::from_iter(card.set_a.clone());
-        let b: HashSet<usize> = HashSet::from_iter(card.set_b.clone());
-        a.intersection(&b).count()
+        let nums_winning: HashSet<usize> = HashSet::from_iter(card.nums_winning.clone());
+        let nums_held: HashSet<usize> = HashSet::from_iter(card.nums_held.clone());
+        nums_winning.intersection(&nums_held).count()
     }
 }
