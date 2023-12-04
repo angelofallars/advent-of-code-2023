@@ -17,9 +17,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         .collect::<Vec<char>>();
 
     let cards = parser::parse(lexer::lex(input));
-    let pt1_score = evaluator::eval_pt1(&cards);
+    let pt1_score = evaluator::eval_part1(&cards);
     println!("Day 4 Part 1 answer: {:?}", pt1_score);
-    let pt2_score = evaluator::eval_pt2(&cards);
+    let pt2_score = evaluator::eval_part2(&cards);
     println!("Day 4 Part 2 answer: {:?}", pt2_score);
 
     Ok(())
@@ -221,7 +221,7 @@ mod parser {
 mod evaluator {
     use super::*;
 
-    pub fn eval_pt1(cards: &Vec<Card>) -> usize {
+    pub fn eval_part1(cards: &Vec<Card>) -> usize {
         return aux(cards, 0);
 
         fn aux(cards: &Vec<Card>, pos: usize) -> usize {
@@ -234,7 +234,7 @@ mod evaluator {
         }
     }
 
-    pub fn eval_pt2(cards: &Vec<Card>) -> usize {
+    pub fn eval_part2(cards: &Vec<Card>) -> usize {
         let points: Vec<usize> = cards
             .into_iter()
             .map(|card| calculate_matches(card))
