@@ -12,8 +12,8 @@ use parser::Card;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let input = fs::read("./input/day4.txt")?
-        .iter()
-        .map(|i| *i as char)
+        .into_iter()
+        .map(|i| i as char)
         .collect::<Vec<char>>();
 
     let cards = parser::parse(lexer::lex(input));
