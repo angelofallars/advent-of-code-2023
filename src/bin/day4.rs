@@ -1,7 +1,5 @@
-use std::collections::HashSet;
 use std::error::Error;
 use std::fs;
-use std::mem;
 
 #[path = "../functools.rs"]
 mod functools;
@@ -135,6 +133,7 @@ mod lexer {
 
 mod parser {
     use super::*;
+    use std::mem;
 
     #[derive(Debug)]
     pub struct Card {
@@ -229,6 +228,7 @@ mod parser {
 
 mod evaluator {
     use super::*;
+    use std::collections::HashSet;
 
     pub fn eval_part1(cards: &Vec<Card>) -> usize {
         return aux(cards, 0);
