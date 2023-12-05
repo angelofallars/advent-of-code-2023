@@ -18,11 +18,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let almanac = parser::parse(lexer::lex(input));
 
-    let pt1_min_location_number = evaluator::eval_pt1(almanac.clone());
-    println!("Day 5 Part 1 answer: {pt1_min_location_number}");
+    let part1_min_location_number = evaluator::eval_part1(almanac.clone());
+    println!("Day 5 Part 1 answer: {part1_min_location_number}");
 
-    let pt2_min_location_number = evaluator::eval_pt2(almanac);
-    println!("Day 5 Part 2 answer: {pt2_min_location_number}");
+    let part2_min_location_number = evaluator::eval_part2(almanac);
+    println!("Day 5 Part 2 answer: {part2_min_location_number}");
 
     Ok(())
 }
@@ -294,7 +294,7 @@ mod evaluator {
 
     type Mapper = Box<dyn Fn(usize) -> usize>;
 
-    pub fn eval_pt1(almanac: Almanac) -> usize {
+    pub fn eval_part1(almanac: Almanac) -> usize {
         let mappers = maps_to_mappers(almanac.maps);
         let seeds = almanac.initial.numbers;
 
@@ -305,7 +305,7 @@ mod evaluator {
             .unwrap()
     }
 
-    pub fn eval_pt2(almanac: Almanac) -> usize {
+    pub fn eval_part2(almanac: Almanac) -> usize {
         let mappers = maps_to_mappers(almanac.maps);
         let seeds = almanac.initial.numbers;
 
