@@ -289,8 +289,6 @@ mod parser {
 }
 
 mod evaluator {
-    use cached::proc_macro::cached;
-
     use super::parser::Almanac;
     use crate::parser::Map;
 
