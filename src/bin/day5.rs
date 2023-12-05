@@ -295,7 +295,14 @@ mod evaluator {
     type Mapper = Box<dyn Fn(usize) -> usize>;
 
     pub fn eval_pt1(almanac: Almanac) -> usize {
-        eval(almanac.maps, almanac.initial.numbers)
+        let mappers = maps_to_mappers(almanac.maps);
+        let seeds = almanac.initial.numbers;
+
+        seeds
+            .into_iter()
+            .map(|seed| traverse_categories(seed, &mappers))
+            .min()
+            .unwrap()
     }
 
     pub fn eval_pt2(almanac: Almanac) -> usize {
@@ -319,16 +326,6 @@ mod evaluator {
                     min
                 }
             })
-    }
-
-    fn eval(maps: Vec<Map>, seeds: Vec<usize>) -> usize {
-        let mappers = maps_to_mappers(maps);
-
-        seeds
-            .into_iter()
-            .map(|seed| traverse_categories(seed, &mappers))
-            .min()
-            .unwrap()
     }
 
     fn maps_to_mappers(maps: Vec<Map>) -> Vec<Mapper> {
