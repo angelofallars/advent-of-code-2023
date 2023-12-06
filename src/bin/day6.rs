@@ -170,8 +170,9 @@ mod evaluator {
 
     pub fn calc_record_beaters(race: &Race) -> usize {
         (0..=race.duration)
-            .map(|hold_duration| calc_distance_travelled(race, hold_duration))
-            .filter(|distance_travelled| distance_travelled > &race.record_distance)
+            .filter(|hold_duration| {
+                calc_distance_travelled(race, *hold_duration) > race.record_distance
+            })
             .count()
     }
 
