@@ -77,7 +77,7 @@ pub mod lextools {
     }
 }
 
-pub fn is_token<T: fmt::Debug>(expected_token: &T, token: &T) -> bool {
+pub fn is_token<T>(expected_token: &T, token: &T) -> bool {
     mem::discriminant(expected_token) == mem::discriminant(token)
 }
 
