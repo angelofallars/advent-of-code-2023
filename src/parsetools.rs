@@ -90,6 +90,39 @@ pub fn is_token_at<T: fmt::Debug>(input: &Vec<T>, pos: Index, expected_token: &T
     }
 }
 
+pub fn parse_numbers<T>(
+    tokens: &Vec<T>,
+    pos: Index,
+    number_token: T,
+    extract: fn(&T) -> &usize,
+) -> (Index, Vec<usize>) {
+    return aux(tokens, pos, number_token, extract, Vec::new());
+
+    fn aux<T>(
+        tokens: &Vec<T>,
+        pos: Index,
+        number_token: T,
+        extract: fn(&T) -> &usize,
+        numbers: Vec<usize>,
+    ) -> (Index, Vec<usize>) {
+        let token = &tokens[pos];
+
+        if is_end(tokens, pos) || !is_token(&number_token, token) {
+            return (pos, numbers);
+        }
+
+        let number = extract(token);
+
+        aux(
+            tokens,
+            advance(pos),
+            number_token,
+            extract,
+            append(numbers, *number),
+        )
+    }
+}
+
 pub fn expect_token<T: fmt::Debug>(expected_token: &T, token: &T) {
     if !is_token(expected_token, &token) {
         panic!("expected token {expected_token:?}, found {token:?}");
