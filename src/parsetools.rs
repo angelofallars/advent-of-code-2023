@@ -136,3 +136,17 @@ pub fn expect_token_at<T: fmt::Debug>(input: &Vec<T>, pos: Index, expected_token
         panic!("expected token {expected_token:?}, found {:?}", &input[pos]);
     }
 }
+
+#[macro_export]
+macro_rules! tail_end {
+    ($input:ident[$pos:ident], return $return:expr) => {
+        if crate::functools::is_end($input, $pos) {
+            return $return;
+        }
+    };
+    ($input:ident[$pos:ident], if $condition:expr, return $return:expr) => {
+        if $condition || crate::functools::is_end($input, $pos) {
+            return $return;
+        }
+    };
+}
